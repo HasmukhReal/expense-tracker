@@ -16,6 +16,10 @@ def expense_add(func_date):
         if choice2.lower() == 'y':
             a = int(input("Enter the expense amount: "))
             r = input("Enter Reason: ")
+            if func_date in expenses:
+                pass
+            else:
+                expenses[func_date] = []
             expenses[func_date].append({
                 "amount": a,
                 "reason": r
