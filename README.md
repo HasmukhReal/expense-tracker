@@ -49,19 +49,33 @@ Expenses are stored in `data.txt` using this format:
 
 Example:
 
-```
+```bash
 12-12-2025|120|food
 12-12-2025|50|bus
 ```
 
 ## Project Structure
 
-```
+```bash
 expense-tracker
 │
 ├── main.py      # Main program
 ├── data.txt     # Expense data
 └── README.md    # Project documentation
+```
+
+#### Target Project Structure:
+```bash
+expense-tracker/
+│
+├── main.py           # CLI menu & main loop
+├── expenses.py       # Functions for adding, editing, viewing expenses
+├── storage.py        # File handling (data.txt, CSV, backup)
+├── analytics.py      # Graphs, summaries, trend lines
+├── utils.py          # Utility functions (date validation, formatting)
+├── data/
+│   └── data.txt      # Expense data
+└── README.md         # Project documentation
 ```
 
 ## Installation
