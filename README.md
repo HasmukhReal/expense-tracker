@@ -118,3 +118,7 @@ python main.py
 ### Advanced Features
 - Budget alerts
 - Category tracking
+
+## License
+
+This project is licensed under the MIT License.
