@@ -140,7 +140,7 @@ while True:
             if temp_expenses == expenses:
                 break
             else:
-                q = input("Some changes are not save, are you sure you wanna discard all changes and quit?(y/n): ")
+                q = input("Some changes are not saved, are you sure you wanna discard all changes and quit?(y/n): ")
                 if q.lower() == "n":
                     save_exp()
                     input("Changes saved! Press Enter to quit...")
