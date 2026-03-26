@@ -1,23 +1,10 @@
+import storage
 import copy
 
-expenses = {} # Main data loader
-temp_expenses = {} # Save checker
-
-#------------------------------- Data reading from file -------------------------------#
-try:
-    with open("data.txt", 'r') as file:
-        for line in file:
-            line = line.strip()
-            var_date, var_amount, var_reason = line.split('|')
-            var_amount = int(var_amount)
-            if var_date not in expenses:
-                expenses[var_date] = [{"amount": var_amount, "reason": var_reason}]
-            else:
-                expenses[var_date].append({"amount": var_amount, "reason": var_reason})
-        temp_expenses = copy.deepcopy(expenses)
-except FileNotFoundError:
-    pass
-#--------------------------------------------------------------------------------------#
+#-------------------------------- Initializing the data --------------------------------#
+expenses = storage.load_data()
+temp_expenses = copy.deepcopy(expenses)
+#---------------------------------------------------------------------------------------#
 
 #------------------------------- Expense Adding Function -------------------------------#
 def add_exp(func_date):
@@ -28,7 +15,7 @@ def add_exp(func_date):
                 a = int(input("Enter the expense amount: "))
             except ValueError:
                 print("Invalid amount entered.")
-                return
+                continue
             r = input("Enter Reason: ")
             if func_date in expenses:
                 pass
@@ -64,16 +51,6 @@ def view_exp():
         
     input("Press Enter to continue...")
 #---------------------------------------------------------------------------------------#
-
-#------------------------- Saving added expenses in data file --------------------------#
-def save_exp():
-    global temp_expenses
-    with open("data.txt", "w") as file:
-        for date, exp_list in expenses.items():
-            for exp in exp_list:
-                file.write(f"{date}|{exp['amount']}|{exp['reason']}\n")
-    temp_expenses = copy.deepcopy(expenses)
-#---------------------------------------------------------------------- -----------------#
 
 #------------------------------ Expense Removing Function ------------------------------#
 def remove_exp():
@@ -135,14 +112,14 @@ while True:
         case "v":
             view_exp()
         case "s":
-            save_exp()
+            storage.save_data(expenses)
         case "q":
             if temp_expenses == expenses:
                 break
             else:
                 q = input("Some changes are not saved, are you sure you wanna discard all changes and quit?(y/n): ")
                 if q.lower() == "n":
-                    save_exp()
+                    storage.save_data(expenses)
                     input("Changes saved! Press Enter to quit...")
                     break
                 elif q.lower() == "y":
@@ -150,7 +127,7 @@ while True:
                 else:
                     input("Invalid choice! Try again later...")
         case "sq":
-            save_exp()
+            storage.save_data(expenses)
             input("Your file has been saved! Press enter to quit...")
             break
         case _:
