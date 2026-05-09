@@ -1,20 +1,18 @@
 from datetime import date as date_type
-from utils import parse_date, validate_date
+from utils import parse_date, validate_date, prompt
 
 
-def add_exp(func_date, expense):
+def add_exp(func_date: str, expense: dict) -> None:
     while True:
-        choice2 = input(f"Do you wanna add expense amount for {func_date}?(y/n): ")
+        choice2 = prompt(f"Do you wanna add expense amount for {func_date}? (y/n) [back to cancel]: ")
         if choice2.lower() == 'y':
             try:
-                a = int(input("Enter the expense amount: "))
+                a = int(prompt("Enter the expense amount: "))
             except ValueError:
                 print("Invalid amount entered.")
                 continue
-            r = input("Enter Reason: ")
-            if func_date in expense:
-                pass
-            else:
+            r = prompt("Enter Reason: ")
+            if func_date not in expense:
                 expense[func_date] = []
             expense[func_date].append({
                 "amount": a,
@@ -50,20 +48,20 @@ def view_exp(expense):
 
 
 #------------------------------ Expense Removing Function ------------------------------#
-def remove_exp(expense):
-    func_date = input("Enter the date from which you want expense to be removed: ").strip()
+def remove_exp(expense: dict) -> None:
+    func_date = prompt("Enter the date from which you want expense to be removed [back to cancel]: ")
 
     if not validate_date(func_date):
         print("Invalid date format. Please use DD-MM-YYYY (e.g. 09-05-2026).")
         return
 
     try:
-        func_amount = int(input("Enter the exact amount of the expense you want to remove: "))
+        func_amount = int(prompt("Enter the exact amount of the expense you want to remove: "))
     except ValueError:
         print("Invalid amount entered.")
         return
 
-    func_reason = input("Enter the exact reason of the expense you want to remove: ")
+    func_reason = prompt("Enter the exact reason of the expense you want to remove: ")
 
     if func_date not in expense:
         print("Entered date is not in the record.")
@@ -77,7 +75,7 @@ def remove_exp(expense):
         if exp["amount"] == func_amount and exp["reason"] == func_reason:
             print(f"\nAmount: {exp['amount']}")
             print(f"Reason: {exp['reason']}")
-            confirm = input("\nAre you sure you want to delete this expense? (y/n): ")
+            confirm = prompt("\nAre you sure you want to delete this expense? (y/n) [back to cancel]: ")
             if confirm.lower() != "y":
                 print("Deletion cancelled.")
                 input()
