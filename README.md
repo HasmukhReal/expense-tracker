@@ -36,45 +36,36 @@ This project is actively being improved and developed as I learn more Python and
 ## Features
 
 - Add expenses with amount and reason
-- View expenses grouped by date
-- Save expenses to a file
-- Load existing expenses from file
-- Simple CLI menu system
+- Remove expenses by specifying date, amount, and reason
+- View expenses grouped by date (sorted chronologically)
+- Robust input validation (dates, amounts)
+- "Back" navigation: Type 'back' anywhere to cancel an operation
+- Safe Exit: Warning if quitting with unsaved changes
+- Modular architecture for better maintainability
+- Automated unit tests for core utilities
 
-## File Format
-
-Expenses are stored in `data.txt` using this format:
+Expenses are stored in `data/data.txt` using this format:
 
 `date|amount|reason`
 
 Example:
 
-```bash
+```text
 12-12-2025|120|food
 12-12-2025|50|bus
 ```
 
-## Project Structure
-
-```bash
-expense-tracker
-│
-├── main.py      # Main program
-├── data.txt     # Expense data
-└── README.md    # Project documentation
-```
-
-#### Target Project Structure:
-```bash
+```text
 expense-tracker/
 │
 ├── main.py           # CLI menu & main loop
-├── expenses.py       # Functions for adding, editing, viewing expenses
-├── storage.py        # File handling (data.txt, CSV, backup)
-├── analytics.py      # Graphs, summaries, trend lines
-├── utils.py          # Utility functions (date validation, formatting)
+├── expenses.py       # Adding and removing logic
+├── storage.py        # File handling (data/data.txt)
+├── analytics.py      # Future home for graphs and summaries
+├── utils.py          # Date validation and shared prompts
+├── test_utils.py     # Unit tests for date logic
 ├── data/
-│   └── data.txt      # Expense data
+│   └── data.txt      # Persistent expense records
 └── README.md         # Project documentation
 ```
 
@@ -104,14 +95,10 @@ python main.py
 
 ## Future Improvements
 
-### Project Structure
-- Modular Project Structure
-
 ### Core Features
 - Show total expenses per day
-- Edit expenses
-- Search expenses
-- Input validation
+- Edit existing expenses
+- Search expenses by reason or date range
 
 ### Data Improvements
 - CSV support
@@ -125,7 +112,6 @@ python main.py
 - Monthly summary reports
 
 ### UI Improvements
-- Back option in every screen
 - Clean CLI dashboard
 - Colored CLI Interface
 

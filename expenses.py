@@ -20,14 +20,10 @@ def add_exp(func_date: str, expense: dict) -> None:
             })
         elif choice2.lower() == 'n':
             print("Exiting adding mode...")
-            break
-        else:
-            print("Wrong Input... Try Again!")
-#---------------------------------------------------------------------------------------#
 
 
-#---------------------------- Expense list viewing function ----------------------------#
 def view_exp(expense):
+    """Sorts and displays all expenses by date."""
     if not expense:
         print("No expenses recorded.")
         input("Press Enter to continue...")
@@ -44,11 +40,10 @@ def view_exp(expense):
         print()
         
     input("Press Enter to continue...")
-#---------------------------------------------------------------------------------------#
 
 
-#------------------------------ Expense Removing Function ------------------------------#
 def remove_exp(expense: dict) -> None:
+    """Prompt user for details and remove a specific expense entry."""
     func_date = prompt("Enter the date from which you want expense to be removed [back to cancel]: ")
 
     if not validate_date(func_date):
