@@ -1,4 +1,5 @@
 import os
+from utils import validate_date
 
 # This finds the directory where storage.py actually lives
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -25,6 +26,9 @@ def load_data():
                 var_date, var_amount, var_reason = line.split('|')
                 var_amount = int(var_amount)
                 
+                if not validate_date(var_date):
+                    print(f"Warning: Skipping row with invalid date '{var_date}'.")
+                    continue
                 if var_date not in expenses:
                     expenses[var_date] = []
                 expenses[var_date].append({"amount": var_amount, "reason": var_reason})
