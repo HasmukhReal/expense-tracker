@@ -1,7 +1,7 @@
 import storage
 import copy
 import expenses
-from utils import validate_date, get_current_date
+from utils import validate_date, get_current_date, BackPressed, prompt
 
 #-------------------------------- Initializing the data --------------------------------#
 expense = storage.load_data()
@@ -18,14 +18,21 @@ while True:
 
     match choice.lower():
         case "a":
-            while True:
-                date = input(f"Enter Date(dd-mm-yyyy) [today: {get_current_date()}]: ").strip()
-                if validate_date(date):
-                    break
-                print("Invalid date. Please use DD-MM-YYYY format (e.g. 09-05-2026).")
-            expenses.add_exp(date, expense)
+            try:
+                while True:
+                    raw = prompt(f"Enter Date(dd-mm-yyyy) [press Enter for today {get_current_date()}]: ")
+                    date = raw or get_current_date()
+                    if validate_date(date):
+                        break
+                    print("Invalid date. Please use DD-MM-YYYY format (e.g. 09-05-2026).")
+                expenses.add_exp(date, expense)
+            except BackPressed:
+                print("Operation cancelled.")
         case "r":
-            expenses.remove_exp(expense)
+            try:
+                expenses.remove_exp(expense)
+            except BackPressed:
+                print("Operation cancelled.")
         case "v":
             expenses.view_exp(expense)
         case "s":

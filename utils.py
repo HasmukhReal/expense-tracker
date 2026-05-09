@@ -109,3 +109,41 @@ def get_current_date() -> str:
         True
     """
     return format_date(date.today())
+
+
+class BackPressed(Exception):
+    """Raised when the user types 'back' at any interactive prompt.
+
+    Using an exception lets 'back' unwind through nested call stacks
+    (e.g. inside while-loops in add_exp or remove_exp) all the way up
+    to main.py, where a single try/except catches it and cancels the
+    operation cleanly without recording anything.
+    """
+
+
+def prompt(message: str) -> str:
+    """Display *message*, read a line from stdin, and return the stripped value.
+
+    If the user enters 'back' (case-insensitive), :class:`BackPressed` is
+    raised, cancelling the current operation without recording anything.
+    Empty input is returned as an empty string so the caller can decide
+    what default to apply (e.g. today's date).
+
+    Args:
+        message: The text to display before reading input.
+
+    Returns:
+        The stripped input string.
+
+    Raises:
+        BackPressed: If the user types 'back'.
+
+    Examples:
+        >>> # prompt("Enter value: ")  # user types 'back' → raises BackPressed
+        >>> # prompt("Enter value: ")  # user types '' → returns ''
+        >>> # prompt("Enter value: ")  # user types '  42  ' → returns '42'
+    """
+    value = input(message).strip()
+    if value.lower() == "back":
+        raise BackPressed()
+    return value
