@@ -1,4 +1,7 @@
-#------------------------------- Expense Adding Function -------------------------------#
+from datetime import date as date_type
+from utils import parse_date, validate_date
+
+
 def add_exp(func_date, expense):
     while True:
         choice2 = input(f"Do you wanna add expense amount for {func_date}?(y/n): ")
@@ -31,12 +34,12 @@ def view_exp(expense):
         print("No expenses recorded.")
         input("Press Enter to continue...")
         return
-    for date in sorted(expense):
+    for exp_date in sorted(expense, key=lambda d: parse_date(d) or date_type.min):
         print("-" * 45)
-        print(f"For date {date}:")
+        print(f"For date {exp_date}:")
         print("-" * 45)
 
-        for exp in expense[date]:
+        for exp in expense[exp_date]:
             print(f"\nExpense Amount: {exp['amount']}")
             print(f"Reason: {exp['reason']}")
 
@@ -48,7 +51,11 @@ def view_exp(expense):
 
 #------------------------------ Expense Removing Function ------------------------------#
 def remove_exp(expense):
-    func_date = input("Enter the date from which you want expense to be removed: ")
+    func_date = input("Enter the date from which you want expense to be removed: ").strip()
+
+    if not validate_date(func_date):
+        print("Invalid date format. Please use DD-MM-YYYY (e.g. 09-05-2026).")
+        return
 
     try:
         func_amount = int(input("Enter the exact amount of the expense you want to remove: "))
