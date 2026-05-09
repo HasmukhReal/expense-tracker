@@ -3,14 +3,13 @@ import copy
 import expenses
 from utils import validate_date, get_current_date, BackPressed, prompt
 
-#-------------------------------- Initializing the data --------------------------------#
+# Initialize data
 expense = storage.load_data()
 temp_expenses = copy.deepcopy(expense)
-#---------------------------------------------------------------------------------------#
 
 
 
-#-------------------------------------------- The Main Code --------------------------------------------#
+# Main application loop
 while True:
     print("What do you wanna do?")
     print("a = Add Expense\nr = Remove Expense\nv = View Expense Data\ns = Save\nq = Quit\nsq = Save and Quit")
@@ -57,4 +56,3 @@ while True:
         case _:
             print("Please choose a valid option from the given choices...")
             continue
-#-------------------------------------------------------------------------------------------------------#
