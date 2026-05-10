@@ -1,5 +1,5 @@
 from datetime import date as date_type
-from utils import parse_date, validate_date, prompt
+from utils import parse_date, validate_date, prompt, get_category_from_input
 
 
 def add_exp(func_date: str, expense: dict) -> None:
