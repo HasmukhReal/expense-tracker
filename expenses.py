@@ -1,5 +1,5 @@
 from datetime import date as date_type
-from utils import parse_date, validate_date, prompt, CATEGORIES, get_category_from_input
+from utils import parse_date, validate_date, prompt
 
 
 def add_exp(func_date: str, expense: dict) -> None:
@@ -17,11 +17,13 @@ def add_exp(func_date: str, expense: dict) -> None:
                 expense[func_date] = []
             expense[func_date].append({
                 "amount": a,
-                "reason": r,
-                "category": category
+                "reason": r
             })
         elif choice2.lower() == 'n':
             print("Exiting adding mode...")
+            break
+        else:
+            print("Wrong Input... Try Again!")
 
 
 def view_exp(expense):
@@ -71,7 +73,7 @@ def remove_exp(expense: dict) -> None:
     found = False
 
     for exp in exp_list:
-        if exp["amount"] == func_amount and exp["reason"] == func_reason and exp.get("category") == func_category:
+        if exp["amount"] == func_amount and exp["reason"] == func_reason:
             print(f"\nAmount: {exp['amount']}")
             print(f"Reason: {exp['reason']}")
             print(f"Category: {exp.get('category', 'Other')}")
