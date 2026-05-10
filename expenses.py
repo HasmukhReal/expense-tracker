@@ -1,7 +1,6 @@
 from datetime import date as date_type
 from utils import parse_date, validate_date, prompt
-
-CATEGORIES = ["Food", "Travel", "Bills", "Shopping", "Other"]
+from categories import CATEGORIES, get_category_from_input
 
 
 def add_exp(func_date: str, expense: dict) -> None:
@@ -14,18 +13,7 @@ def add_exp(func_date: str, expense: dict) -> None:
                 print("Invalid amount entered.")
                 continue
             r = prompt("Enter Reason: ")
-            print("Select Category:")
-            for i, cat in enumerate(CATEGORIES, 1):
-                print(f"  {i}. {cat}")
-            cat_choice = prompt("Enter category number: ")
-            try:
-                cat_idx = int(cat_choice) - 1
-                if 0 <= cat_idx < len(CATEGORIES):
-                    category = CATEGORIES[cat_idx]
-                else:
-                    category = "Other"
-            except ValueError:
-                category = "Other"
+            category = get_category_from_input(prompt)
             if func_date not in expense:
                 expense[func_date] = []
             expense[func_date].append({
