@@ -120,15 +120,19 @@ def display_categories():
 def get_category_from_input(prompt_func):
     print("Select Category:")
     display_categories()
-    cat_choice = prompt_func("Enter category number: ")
-    try:
-        cat_idx = int(cat_choice) - 1
-        if 0 <= cat_idx < len(CATEGORIES):
-            return CATEGORIES[cat_idx]
-        else:
+    while True:
+        cat_choice = prompt_func("Enter category number: ")
+        if cat_choice == "":
             return "Other"
-    except ValueError:
-        return "Other"
+        try:
+            cat_idx = int(cat_choice) - 1
+            if 0 <= cat_idx < len(CATEGORIES):
+                return CATEGORIES[cat_idx]
+            else:
+                print("Invalid selection. Defaulting to 'Other'.")
+                return "Other"
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
 class BackPressed(Exception):
     """Raised when the user types 'back' at any interactive prompt.
