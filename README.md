@@ -42,6 +42,7 @@ This project is actively being improved and developed as I learn more Python and
 - "Back" navigation: Type 'back' anywhere to cancel an operation
 - Safe Exit: Warning if quitting with unsaved changes
 - Modular architecture for better maintainability
+- Category tracking for expenses – assign each expense to a predefined category (Food, Travel, Bills, Shopping, Other) and view summaries per category.
 - Automated unit tests for core utilities
 
 Expenses are stored in `data/data.txt` using this format:
