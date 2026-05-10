@@ -111,6 +111,25 @@ def get_current_date() -> str:
     return format_date(date.today())
 
 
+CATEGORIES = ["Food", "Travel", "Bills", "Shopping", "Other"]
+
+def display_categories():
+    for i, cat in enumerate(CATEGORIES, 1):
+        print(f"  {i}. {cat}")
+
+def get_category_from_input(prompt_func):
+    print("Select Category:")
+    display_categories()
+    cat_choice = prompt_func("Enter category number: ")
+    try:
+        cat_idx = int(cat_choice) - 1
+        if 0 <= cat_idx < len(CATEGORIES):
+            return CATEGORIES[cat_idx]
+        else:
+            return "Other"
+    except ValueError:
+        return "Other"
+
 class BackPressed(Exception):
     """Raised when the user types 'back' at any interactive prompt.
 
