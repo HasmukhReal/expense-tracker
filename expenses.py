@@ -1,5 +1,5 @@
 from datetime import date as date_type
-from utils import parse_date, validate_date, prompt
+from utils import parse_date, validate_date, prompt, CATEGORIES, get_category_from_input
 
 
 def add_exp(func_date: str, expense: dict) -> None:
@@ -12,11 +12,13 @@ def add_exp(func_date: str, expense: dict) -> None:
                 print("Invalid amount entered.")
                 continue
             r = prompt("Enter Reason: ")
+            category = get_category_from_input(prompt)
             if func_date not in expense:
                 expense[func_date] = []
             expense[func_date].append({
                 "amount": a,
-                "reason": r
+                "reason": r,
+                "category": category
             })
         elif choice2.lower() == 'n':
             print("Exiting adding mode...")
@@ -36,6 +38,7 @@ def view_exp(expense):
         for exp in expense[exp_date]:
             print(f"\nExpense Amount: {exp['amount']}")
             print(f"Reason: {exp['reason']}")
+            print(f"Category: {exp.get('category', 'Other')}")
 
         print()
         
@@ -57,6 +60,7 @@ def remove_exp(expense: dict) -> None:
         return
 
     func_reason = prompt("Enter the exact reason of the expense you want to remove: ")
+    func_category = prompt("Enter the exact category of the expense you want to remove: ")
 
     if func_date not in expense:
         print("Entered date is not in the record.")
@@ -67,9 +71,10 @@ def remove_exp(expense: dict) -> None:
     found = False
 
     for exp in exp_list:
-        if exp["amount"] == func_amount and exp["reason"] == func_reason:
+        if exp["amount"] == func_amount and exp["reason"] == func_reason and exp.get("category") == func_category:
             print(f"\nAmount: {exp['amount']}")
             print(f"Reason: {exp['reason']}")
+            print(f"Category: {exp.get('category', 'Other')}")
             confirm = prompt("\nAre you sure you want to delete this expense? (y/n) [back to cancel]: ")
             if confirm.lower() != "y":
                 print("Deletion cancelled.")

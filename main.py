@@ -11,9 +11,16 @@ temp_expenses = copy.deepcopy(expense)
 
 # Main application loop
 while True:
-    print("What do you wanna do?")
-    print("a = Add Expense\nr = Remove Expense\nv = View Expense Data\ns = Save\nq = Quit\nsq = Save and Quit")
-    choice = input("")
+    print("\n  What do you wanna do?")
+    print("  ─────────────────────────")
+    print("  [a] Add Expense")
+    print("  [r] Remove Expense")
+    print("  [v] View Expense Data")
+    print("  [s] Save")
+    print("  [q] Quit")
+    print("  [sq] Save and Quit")
+    print("  ─────────────────────────")
+    choice = input("\nEnter your choice: ")
 
     match choice.lower():
         case "a":
