@@ -23,15 +23,28 @@ def load_data():
                 line = line.strip()
                 if not line: continue
                 
-                var_date, var_amount, var_reason = line.split('|')
-                var_amount = int(var_amount)
+                parts = line.split('|')
+                if len(parts) == 4:
+                    var_date, var_amount, var_reason, var_category = parts
+                elif len(parts) == 3:
+                    var_date, var_amount, var_reason = parts
+                    var_category = "Other"
+                else:
+                    print(f"Warning: Skipping malformed row: '{line}'.")
+                    continue
+                
+                try:
+                    var_amount = int(var_amount)
+                except ValueError:
+                    print(f"Warning: Skipping row with invalid amount: '{line}'.")
+                    continue
                 
                 if not validate_date(var_date):
                     print(f"Warning: Skipping row with invalid date '{var_date}'.")
                     continue
                 if var_date not in expenses:
                     expenses[var_date] = []
-                expenses[var_date].append({"amount": var_amount, "reason": var_reason})
+                expenses[var_date].append({"amount": var_amount, "reason": var_reason, "category": var_category})
     except (FileNotFoundError, ValueError):
         print("Warning: Data file is empty or corrupted. Starting from beginning...")
     
@@ -43,4 +56,4 @@ def save_data(expenses_dict):
     with open(DATA_FILE, "w") as file:
         for date, exp_list in expenses_dict.items():
             for exp in exp_list:
-                file.write(f"{date}|{exp['amount']}|{exp['reason']}\n")
+                file.write(f"{date}|{exp['amount']}|{exp['reason']}|{exp.get('category', 'Other')}\n")

@@ -17,7 +17,8 @@ def add_exp(func_date: str, expense: dict) -> None:
                 expense[func_date] = []
             expense[func_date].append({
                 "amount": a,
-                "reason": r
+                "reason": r,
+                "category": category
             })
         elif choice2.lower() == 'n':
             print("Exiting adding mode...")
@@ -73,7 +74,7 @@ def remove_exp(expense: dict) -> None:
     found = False
 
     for exp in exp_list:
-        if exp["amount"] == func_amount and exp["reason"] == func_reason:
+        if exp["amount"] == func_amount and exp["reason"] == func_reason and exp.get("category", "Other") == func_category:
             print(f"\nAmount: {exp['amount']}")
             print(f"Reason: {exp['reason']}")
             print(f"Category: {exp.get('category', 'Other')}")
